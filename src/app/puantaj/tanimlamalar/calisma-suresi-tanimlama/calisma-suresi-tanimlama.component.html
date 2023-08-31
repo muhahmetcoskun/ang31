@@ -1,0 +1,150 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Yeni" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedcalismaSuresis()"
+                            [disabled]="!selectedcalismaSuresis || !selectedcalismaSuresis.length"></button> -->
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+
+
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2"
+                        pTooltip="CSV" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                        class="p-button-success mr-2" pTooltip="EXCEL" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+                </ng-template>
+            </p-toolbar>
+
+            <p-table [style]="{'width':'100% !important','overflow':'auto!important'}" #dt [value]="calismaSuresis"
+                [columns]="cols" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="{totalRecords} kayıttan {first} ile {last} arasındaki kayıt gösteriliyor."
+                [(selection)]="selectedcalismaSuresis" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0"></h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Ara..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        
+                        <th [hidden]="true">Id <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="siraNo">Sıra No <p-sortIcon field="siraNo"></p-sortIcon></th>
+                        <th pSortableColumn="adi">Çalışma Süresi <p-sortIcon field="adi"></p-sortIcon></th>
+                        <th pSortableColumn="aktif">Durum <p-sortIcon field="aktif"></p-sortIcon></th>
+                        <th class="islemButtonWitdh">İşlem</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-calismaSuresiD let-i="rowIndex">
+                    <tr [ngClass]="{'aktifclass': calismaSuresiD.aktif===true }">
+
+                      
+
+                        <td [hidden]="true" style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
+                            {{ calismaSuresiD.id}}
+                        </td>
+                        <td style="width:40%; min-width:10rem;">
+                            <span class="p-column-title">Sıra No</span>
+                            {{calismaSuresiD.siraNo }}
+                        </td>
+                        <td style="width:40%; min-width:10rem;">
+                            <span class="p-column-title">Adı</span>
+                            {{calismaSuresiD.adi }}
+                        </td>
+
+                        <td  style="width:40%; min-width:8rem;">
+                            <span class="p-column-title">Durum</span>
+                            {{calismaSuresiD.aktif | aktifpasifpipe }}
+                        </td>
+
+                        <td style="width:10%; min-width:8rem;">
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editcalismaSuresi(calismaSuresiD)" pTooltip="Düzenle" ></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                    (click)="deletecalismaSuresi(calismaSuresiD)"  pTooltip="Pasife Al" ></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+            <p-dialog [(visible)]="calismaSuresiDialog" [style]="{width: '750px'}" header="Çalışma Süresi Kaydet" [modal]="true"
+                class="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="grid formgrid marginbottom">
+                        <div class="col-6 md:col-6">
+                            <label for="siraNo">Sıra No</label>
+                        </div>
+                        <div class="col-6 md:col-6">
+                            <input type="text" pInputText id="siraNo" [(ngModel)]="calismaSuresi.siraNo" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !calismaSuresi.siraNo}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !calismaSuresi.siraNo">Lütfen Sıra No Giriniz</small>
+                        </div>
+                    </div>
+
+                    <div class="grid formgrid marginbottom">
+                        <div class="col-6 md:col-6">
+                            <label for="adi,"> Çalışma Süresi</label>
+                        </div>
+                        <div class="col-6 md:col-6">
+                            <input type="text" pInputText id="adi" [(ngModel)]="calismaSuresi.adi" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !calismaSuresi.adi}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !calismaSuresi.adi">Lütfen Çalışma Süresini Giriniz</small>
+                        </div>
+                    </div>
+
+                    <div class="grid formgrid">
+                        <div class="col-6 md:col-6">
+                            <label for="aktif">Aktif</label>
+                        </div>
+                        <div class="col-6 md:col-6">
+                            <p-inputSwitch id="aktif" [(ngModel)]="calismaSuresi.aktif"></p-inputSwitch>
+                        </div>
+                    </div>
+                    <div style="height:290px !important;">
+
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Çık" icon="pi pi-times" class="p-button-text"
+                        (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Kaydet" icon="pi pi-check" class="p-button-text"
+                        (click)="savecalismaSuresi()"></button>
+                </ng-template>
+            </p-dialog>
+            <p-dialog [(visible)]="deletecalismaSuresiDialog" header="Pasife Al" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Pasife Almak İstediğinize Emin Misiniz?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Hayır"
+                        (click)="deletecalismaSuresiDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Evet"
+                        (click)="confirmDeleteSelected()"></button>
+                </ng-template>
+            </p-dialog>
+
+        </div>
+
+    </div>
+</div>

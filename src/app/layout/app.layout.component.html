@@ -1,0 +1,24 @@
+<div class="layout-wrapper" [ngClass]="containerClass">
+    <app-topbar></app-topbar>
+    <div class="layout-sidebar">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="layout-main-container">
+        <div class="layout-main">
+
+            <div class="grid">
+                <div class="col-12 lg:col-12 xl:col-12">
+                    <div class="card mb-12" style="min-height: calc(98vh - 9rem);">
+                       
+                        <router-outlet></router-outlet>  
+                  
+                </div>
+                
+        </div></div>
+        
+        </div>
+        <app-footer></app-footer>
+    </div>
+   
+    <div class="layout-mask"></div>
+</div>

@@ -1,0 +1,40 @@
+<div class="layout-topbar">
+    <a class="layout-topbar-logo" routerLink="">
+        <img src="assets/layout/images/MsbLogo.png" alt="logo">
+        <span style=" font-size: 18px; color:red">MİLLİ SAVUNMA BAKANLIĞI</span>
+    </a>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+        (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+  
+    
+
+    <div #topbarmenu class="layout-topbar-menu"
+        [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+
+
+        <button class="p-link layout-topbar-button" *ngIf="fullScreenBool === true" (click)="openFullscreen()">
+            <i class="p-link layout-topbar-button pi pi-window-maximize"></i>
+
+        </button>
+
+
+        <button class="p-link layout-topbar-button" *ngIf="fullScreenBool === false" (click)="closeFullscreen()">
+            <i class="pi pi-window-minimize"></i>
+
+        </button>
+        <button class="p-link layout-topbar-button">
+            <i class="pi pi-user"></i>
+
+        </button>
+        <button class="p-link layout-topbar-button" (click)="logOut()" [routerLink]="'auth/login'">
+            <i class="pi pi-power-off"></i>
+        </button>
+    </div>
+</div>

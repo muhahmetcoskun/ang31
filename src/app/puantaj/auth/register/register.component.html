@@ -1,0 +1,137 @@
+<div class="container mt-5" >
+  <div style="text-align: center; Display: flex; align-items: center !important; justify-content: center !important; " class="row col-md-12"><h3>Kayıt</h3></div> 
+  
+  <div class="card ms-auto me-auto p-3 shadow-lg custom-card" style="background-color:rgb(245, 245, 215);">
+
+    <form #f="ngForm" (ngSubmit)="f.form.valid && register()" >
+
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{errorMessage}}
+      </div>
+
+      <div class="form-group">
+        <label for="firstname">İsim</label>
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          [(ngModel)]="user.firstname"
+          #firstname="ngModel"
+          class="form-control"
+          required
+        />
+        <div class="alert-danger" *ngIf="!firstname.valid && f.submitted">
+          Lütfen İsim Giriniz.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Soyisim</label>
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          [(ngModel)]="user.lastname"
+          #lastname="ngModel"
+          class="form-control"
+          required
+        />
+        <div class="alert-danger" *ngIf="!lastname.valid && f.submitted">
+          Lütfen Soyisim Giriniz.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username">Kullanıcı Adı</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="user.username"
+          #username="ngModel"
+          class="form-control"
+          required
+        />
+        <div class="alert-danger" *ngIf="!username.valid && f.submitted">
+          Lütfen Kullanıcı Adı Giriniz.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Şifre</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="user.password"
+          #password="ngModel"
+          class="form-control"
+          required
+        />
+        <div class="alert-danger" *ngIf="!password.valid && f.submitted">
+          Lütfen Şifre Giriniz.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">E-Posta</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          #email="ngModel"
+          class="form-control"
+          required
+        />
+        <div class="alert-danger" *ngIf="!email.valid && f.submitted">
+          Lütfen E-Posta Giriniz.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phonenumber">Telefon</label>
+        <input
+          type="number"
+          id="phonenumber"
+          name="phonenumber"
+          [(ngModel)]="user.phonenumber"
+          #phonenumber="ngModel"
+          class="form-control"
+          required
+        />
+        <div class="alert-danger" *ngIf="!phonenumber.valid && f.submitted">
+          Lütfen Telefon Giriniz.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rol</label>
+        <select id="inputState" class="form-control"  id="phonenumber"
+        name="role"
+        [(ngModel)]="user.role"
+        #role="ngModel"
+        required>
+          
+          <option value="admin">Admin</option>
+        </select>
+        <div class="alert-danger" *ngIf="!role.valid && f.submitted">
+          Lütfen Rol Giriniz.
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 mt-3" style="background-color: #50A057;">
+        Giriş
+      </button>
+
+    </form>
+
+    <a [routerLink]="['/auth/login']" class="btn btn-link" style="color: darkgray;">
+      Kullanıcı Hesabım Var.
+    </a>
+  </div>
+</div>
+
+<style>
+  .form-control{
+    background-color: white !important;
+  }
+</style>
